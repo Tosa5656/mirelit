@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mirulit Game Engine | Создавай. Воплощай. Превосходи. | World For Utils Studio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3a86ff;
+            --secondary: #8338ec;
+            --accent: #ff006e;
+            --dark: #0a0f1e;
+            --darker: #050811;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Шапка с интегрированным логотипом */
+        header {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--darker) 100%);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+            border-bottom: 1px solid rgba(58, 134, 255, 0.3);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+        }
+
+        /* Стилизованный логотип с наложенной тройкой */
+        .logo-wrapper {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(58, 134, 255, 0.4);
+            transition: transform 0.3s ease;
+        }
+
+        .logo-wrapper:hover {
+            transform: rotate(5deg) scale(1.05);
+        }
+
+        /* Символ кубического корня */
+        .cube-root-symbol {
+            font-size: 48px;
+            font-weight: bold;
+            color: white;
+            position: absolute;
+            z-index: 2;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Наложенная тройка */
+        .overlay-three {
+            position: absolute;
+            font-size: 70px;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.85);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            opacity: 0.7;
+            font-family: 'Arial Black', sans-serif;
+        }
+
+        .studio-name {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .studio-name span:first-child {
+            font-size: 16px;
+            color: var(--gray);
+            letter-spacing: 1.5px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .engine-name {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Слоган */
+        .slogan {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            font-style: italic;
+            text-align: center;
+            padding: 8px 20px;
+            border-radius: 20px;
+            background: rgba(58, 134, 255, 0.1);
+            border: 1px solid rgba(58, 134, 255, 0.3);
+            max-width: 300px;
+        }
+
+        /* Навигационное меню */
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::before {
+            width: 100%;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+            background: rgba(58, 134, 255, 0.1);
+        }
+
+        /* Основное содержимое */
+        .hero {
+            padding: 120px 40px;
+            background: radial-gradient(circle at 20% 50%, rgba(58, 134, 255, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(131, 56, 236, 0.1) 0%, transparent 50%),
+                        var(--darker);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 90vh;
+        }
+
+        /* Эффект наложенной тройки на фоне */
+        .hero::before {
+            content: '3';
+            position: absolute;
+            font-size: 400px;
+            font-weight: 900;
+            color: rgba(58, 134, 255, 0.05);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            font-family: 'Arial Black', sans-serif;
+            opacity: 0.6;
+        }
+
+        .hero::after {
+            content: '∛';
+            position: absolute;
+            font-size: 200px;
+            font-weight: bold;
+            color: rgba(255, 0, 110, 0.05);
+            top: 40%;
+            left: 30%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            margin-bottom: 25px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero .slogan-large {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: var(--light);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            position: relative;
+            display: inline-block;
+            padding: 15px 35px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            border: 2px solid rgba(58, 134, 255, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        .hero .slogan-large .logo-in-text {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            margin: 0 10px;
+            position: relative;
+            vertical-align: middle;
+        }
+
+        .hero .slogan-large .cube-root {
+            font-size: 30px;
+            font-weight: bold;
+            color: white;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero .slogan-large .overlay-three-small {
+            position: absolute;
+            font-size: 40px;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.8);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            opacity: 0.7;
+            font-family: 'Arial Black', sans-serif;
+        }
+
+        .hero p {
+            font-size: 22px;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            color: #adb5bd;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 18px 40px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 20px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(58, 134, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+            transition: left 0.5s ease;
+            z-index: -1;
+        }
+
+        .cta-button:hover::before {
+            left: 0;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(58, 134, 255, 0.7);
+        }
+
+        /* Секция философии бренда */
+        .brand-philosophy {
+            padding: 100px 40px;
+            background: var(--dark);
+            text-align: center;
+            border-top: 1px solid rgba(58, 134, 255, 0.2);
+            border-bottom: 1px solid rgba(58, 134, 255, 0.2);
+        }
+
+        .philosophy-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .philosophy-logo-large {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 40px;
+            position: relative;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(58, 134, 255, 0.4);
+        }
+
+        .philosophy-logo-large .cube-root-symbol-large {
+            font-size: 100px;
+            font-weight: bold;
+            color: white;
+            position: relative;
+            z-index: 2;
+        }
+
+        .philosophy-logo-large .overlay-three-large {
+            position: absolute;
+            font-size: 150px;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.8);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            opacity: 0.7;
+            font-family: 'Arial Black', sans-serif;
+        }
+
+        .philosophy-text h2 {
+            font-size: 42px;
+            margin-bottom: 30px;
+            color: var(--light);
+        }
+
+        .philosophy-text p {
+            font-size: 20px;
+            line-height: 1.8;
+            color: #adb5bd;
+            margin-bottom: 30px;
+        }
+
+        /* Секции с информацией */
+        .features {
+            padding: 100px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 44px;
+            margin-bottom: 70px;
+            color: var(--light);
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '∛';
+            position: absolute;
+            font-size: 28px;
+            color: var(--primary);
+            top: -20px;
+            right: -40px;
+            background: var(--dark);
+            padding: 5px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--primary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            background: linear-gradient(145deg, rgba(26, 26, 46, 0.8), rgba(10, 15, 30, 0.9));
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(58, 134, 255, 0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+            transition: width 0.4s ease;
+        }
+
+        .feature-card:hover::before {
+            width: 100%;
+            opacity: 0.1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-12px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 30px;
+            color: var(--primary);
+            display: inline-block;
+            padding: 20px;
+            background: rgba(58, 134, 255, 0.1);
+            border-radius: 15px;
+        }
+
+        .feature-card h3 {
+            font-size: 26px;
+            margin-bottom: 20px;
+            color: var(--light);
+        }
+
+        .feature-card p {
+            color: #adb5bd;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .tech-badge {
+            display: inline-block;
+            padding: 6px 15px;
+            background: rgba(255, 0, 110, 0.2);
+            color: var(--accent);
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 5px;
+            border: 1px solid rgba(255, 0, 110, 0.3);
+        }
+
+        /* Секция с уникальными возможностями */
+        .unique-features {
+            padding: 100px 40px;
+            background: radial-gradient(circle at 30% 70%, rgba(131, 56, 236, 0.1) 0%, transparent 50%),
+                        var(--dark);
+            border-top: 1px solid rgba(58, 134, 255, 0.2);
+            border-bottom: 1px solid rgba(58, 134, 255, 0.2);
+        }
+
+        .feature-highlight {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            max-width: 1200px;
+            margin: 0 auto 100px;
+        }
+
+        .feature-highlight:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .feature-visual {
+            flex: 1;
+            min-height: 350px;
+            background: linear-gradient(145deg, rgba(58, 134, 255, 0.1), rgba(131, 56, 236, 0.1));
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 120px;
+            color: var(--primary);
+            border: 2px solid rgba(58, 134, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-visual::before {
+            content: '∛';
+            position: absolute;
+            font-size: 250px;
+            font-weight: bold;
+            color: rgba(58, 134, 255, 0.05);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .feature-visual::after {
+            content: '3';
+            position: absolute;
+            font-size: 180px;
+            font-weight: 900;
+            color: rgba(255, 0, 110, 0.05);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Arial Black', sans-serif;
+        }
+
+        .feature-details {
+            flex: 1;
+        }
+
+        .feature-details h3 {
+            font-size: 36px;
+            margin-bottom: 25px;
+            color: var(--light);
+            background: linear-gradient(90deg, var(--primary), transparent);
+            padding: 15px 25px;
+            border-radius: 15px 0 0 15px;
+            position: relative;
+        }
+
+        .feature-details h3::after {
+            content: '∛';
+            position: absolute;
+            right: 20px;
+            font-size: 24px;
+            color: var(--accent);
+        }
+
+        .compiler-badges {
+            display: flex;
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .compiler-badge {
+            padding: 10px 25px;
+            background: rgba(58, 134, 255, 0.15);
+            border-radius: 10px;
+            font-weight: 600;
+            border: 2px solid rgba(58, 134, 255, 0.3);
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .compiler-badge:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(58, 134, 255, 0.3);
+        }
+
+        .compiler-badge.zig {
+            background: rgba(236, 145, 56, 0.15);
+            border-color: rgba(236, 145, 56, 0.3);
+            color: #ec9138;
+        }
+
+        /* Футер */
+        footer {
+            background-color: var(--dark);
+            padding: 70px 40px 30px;
+            border-top: 1px solid rgba(58, 134, 255, 0.3);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-column h3 {
+            color: var(--primary);
+            margin-bottom: 30px;
+            font-size: 24px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 15px;
+        }
+
+        .footer-column a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-block;
+            padding: 5px 0;
+            font-size: 17px;
+        }
+
+        .footer-column a:hover {
+            color: var(--primary);
+            transform: translateX(8px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 50px;
+            border-top: 1px solid rgba(58, 134, 255, 0.2);
+            color: #6c757d;
+            font-size: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .footer-logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 8px;
+            margin: 0 10px;
+            position: relative;
+            vertical-align: middle;
+        }
+
+        .footer-cube-root {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-overlay-three {
+            position: absolute;
+            font-size: 30px;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.8);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            opacity: 0.7;
+            font-family: 'Arial Black', sans-serif;
+        }
+
+        /* Анимации */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .logo-wrapper {
+            animation: float 5s ease-in-out infinite;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 992px) {
+            .feature-highlight {
+                flex-direction: column !important;
+                gap: 40px;
+            }
+            
+            .feature-visual {
+                width: 100%;
+                min-height: 300px;
+            }
+            
+            .philosophy-logo-large {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .philosophy-logo-large .cube-root-symbol-large {
+                font-size: 70px;
+            }
+            
+            .philosophy-logo-large .overlay-three-large {
+                font-size: 100px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 15px 20px;
+                gap: 20px;
+            }
+
+            .slogan {
+                order: 3;
+                width: 100%;
+                max-width: 100%;
+                margin-top: 10px;
+            }
+
+            nav ul {
+                gap: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero .slogan-large {
+                font-size: 24px;
+                padding: 12px 25px;
+            }
+            
+            .hero .slogan-large .logo-in-text {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .hero .slogan-large .cube-root {
+                font-size: 24px;
+            }
+            
+            .hero .slogan-large .overlay-three-small {
+                font-size: 30px;
+            }
+
+            .features {
+                padding: 60px 20px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .engine-name {
+                font-size: 24px;
+            }
+            
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .hero .slogan-large {
+                font-size: 20px;
+                padding: 10px 20px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 40px;
+            }
+            
+            .section-title {
+                font-size: 36px;
+            }
+            
+            .feature-details h3 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка сайта с интегрированным логотипом -->
+    <header>
+        <div class="logo-container">
+            <div class="logo-wrapper" title="∛3 - Кубический корень из трёх | World For Utils Studio">
+                <div class="cube-root-symbol">∛</div>
+                <div class="overlay-three">3</div>
+            </div>
+            <div class="studio-name">
+                <span>World For Utils Studio</span>
+                <div class="engine-name">Mirulit Game Engine</div>
+            </div>
+        </div>
+        
+        <div class="slogan">Создавай. Воплощай. Превосходи.</div>
+        
+        <nav>
+            <ul>
+                <li><a href="#philosophy">Философия</a></li>
+                <li><a href="#features">Технологии</a></li>
+                <li><a href="#editor">Редактор</a></li>
+                <li><a href="#compilers">Компиляторы</a></li>
+                <li><a href="#download">Скачать</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Основной контент -->
+    <main>
+        <!-- Герой-секция -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Игровой движок, где каждая деталь имеет значение</h1>
+                <div class="slogan-large">
+                    От 
+                    <span class="logo-in-text">
+                        <span class="cube-root">∛</span>
+                        <span class="overlay-three-small">3</span>
+                    </span> 
+                    к бесконечности возможностей
+                </div>
+                <p>World For Utils Studio представляет Mirulit — игровой движок, созданный с математической точностью и вниманием к каждой детали. Там, где другие видят ограничения, мы видим потенциал для инноваций.</p>
+                <a href="#download" class="cta-button">Начать создавать с Mirulit</a>
+            </div>
+        </section>
+
+        <!-- Секция философии бренда -->
+        <section id="philosophy" class="brand-philosophy">
+            <div class="philosophy-container">
+                <div class="philosophy-logo-large">
+                    <div class="cube-root-symbol-large">∛</div>
+                    <div class="overlay-three-large">3</div>
+                </div>
+                <div class="philosophy-text">
+                    <h2>Философия ∛3</h2>
+                    <p>Наш логотип — это не просто символ. ∛3 — кубический корень из трёх — представляет нашу философию: поиск идеального баланса между тремя фундаментальными принципами:</p>
+                    <p><strong>Мощь</strong> нативного C, <strong>удобство</strong> визуального редактора и <strong>гибкость</strong> двойной системы компиляции.</p>
+                    <p>Тройка, наложенная на символ корня, — это наше обещание: мы не просто создаём инструменты, мы создаём основу, на которой вы сможете построить нечто большее.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секция уникальных возможностей -->
+        <section id="features" class="unique-features">
+            <h2 class="section-title">Уникальные технологии</h2>
+            
+            <div class="feature-highlight">
+                <div class="feature-visual">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="feature-details">
+                    <h3>Нативный C как скриптовый язык</h3>
+                    <p>Первый в индустрии движок, использующий чистый C в качестве скриптового языка. Максимальная производительность, полный контроль над памятью и прямая интеграция с ядром движка.</p>
+                    <p>Без виртуальных машин, без накладных расходов. Только чистый код и максимальная скорость выполнения.</p>
+                    <div class="tech-badge">Нативная производительность</div>
+                    <div class="tech-badge">Прямой доступ к памяти</div>
+                    <div class="tech-badge">Интеграция с ядром движка</div>
+                </div>
+            </div>
+            
+            <div class="feature-highlight">
+                <div class="feature-visual">
+                    <i class="fas fa-cube"></i>
+                </div>
+                <div class="feature-details">
+                    <h3>Нативный редактор миров</h3>
+                    <p>Редактор, созданный с нуля для Mirulit, а не переделанный из существующих решений. Полная интеграция с архитектурой движка, мгновенное предпросмотр изменений и оптимизированный workflow.</p>
+                    <p>Создавайте сложные игровые миры с помощью инструментов, которые понимают специфику вашего проекта.</p>
+                    <div class="tech-badge">Создан специально для Mirulit</div>
+                    <div class="tech-badge">Мгновенный предпросмотр</div>
+                    <div class="tech-badge">Оптимизированный workflow</div>
+                </div>
+            </div>
+            
+            <div class="feature-highlight">
+                <div class="feature-visual">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <div class="feature-details">
+                    <h3>Двойная система компиляции</h3>
+                    <p>Выбирайте компилятор под ваши задачи: наш кастомный компилятор для максимальной совместимости или Zig для передовой оптимизации и кроссплатформенности.</p>
+                    <div class="compiler-badges">
+                        <div class="compiler-badge">Кастомный компилятор Mirulit</div>
+                        <div class="compiler-badge zig">Zig компилятор</div>
+                    </div>
+                    <p>Два компилятора — двойной контроль над производительностью и размерами бинарных файлов. Собирайте проекты именно так, как нужно вам.</p>
+                    <div class="tech-badge">Выбор под задачу</div>
+                    <div class="tech-badge">Максимальная оптимизация</div>
+                    <div class="tech-badge">Кроссплатформенность</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секция возможностей -->
+        <section class="features">
+            <h2 class="section-title">Ключевые возможности</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Максимальная производительность</h3>
+                    <p>Благодаря использованию нативного C и оптимизированной архитектуре, Mirulit обеспечивает беспрецедентную производительность для самых требовательных проектов.</p>
+                    <div class="tech-badge">60+ FPS в 4K</div>
+                    <div class="tech-badge">Минимальные задержки</div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </div>
+                    <h3>Масштабируемость</h3>
+                    <p>От простых 2D-платформеров до сложных открытых миров. Архитектура Mirulit масштабируется под любые проекты без потери производительности.</p>
+                    <div class="tech-badge">Динамическая загрузка</div>
+                    <div class="tech-badge">Потоковая обработка</div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3>Кроссплатформенность</h3>
+                    <p>Собирайте проекты для Windows, Linux, macOS, iOS, Android и основных игровых консолей. Одна кодовая база — все платформы.</p>
+                    <div class="tech-badge">Автоматическая адаптация</div>
+                    <div class="tech-badge">Единая кодовая база</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Подвал сайта -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>World For Utils Studio</h3>
+                <p>Инновации, основанные на математической элегантности. Наш логотип — кубический корень из трёх с наложенной тройкой — символизирует наше стремление к совершенству в каждом аспекте разработки.</p>
+                <p style="margin-top: 20px; color: var(--primary); font-weight: 600; font-style: italic;">∛3 — это больше, чем логотип. Это обещание.</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Технологии</h3>
+                <ul>
+                    <li><a href="#c-scripting">Скриптовый C</a></li>
+                    <li><a href="#native-editor">Нативный редактор</a></li>
+                    <li><a href="#compilers">Система компиляции</a></li>
+                    <li><a href="#performance">Оптимизация</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Ресурсы</h3>
+                <ul>
+                    <li><a href="./doc.html">Документация</a></li>
+                    <li><a href="#tutorials">Обучающие материалы</a></li>
+                    <li><a href="#examples">Примеры проектов</a></li>
+                    <li><a href="#api">API Reference</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Сообщество</h3>
+                <ul>
+                    <li><a href="#forum">Форум разработчиков</a></li>
+                    <li><a href="#discord">Discord сообщество</a></li>
+                    <li><a href="#github">GitHub репозитории</a></li>
+                    <li><a href="#showcase">Галерея проектов</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <div>
+                &copy; 2026 World For Utils Studio. Все права защищены. Mirulit Game Engine и логотип 
+                <span class="footer-logo">
+                    <span class="footer-cube-root">∛</span>
+                    <span class="footer-overlay-three">3</span>
+                </span> 
+                являются собственностью World For Utils Studio.
+            </div>
+            <div style="margin-top: 15px; font-size: 18px;">
+                Создавай. Воплощай. Превосходи.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Плавная прокрутка
+            document.querySelectorAll('nav a, .cta-button').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    if(this.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+                        if(targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 100,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+            
+            // Анимация появления элементов
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            // Применяем анимацию к элементам
+            document.querySelectorAll('.feature-card, .feature-highlight, .philosophy-container').forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(40px)';
+                element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                observer.observe(element);
+            });
+            
+            // Динамическое обновление слогана в шапке
+            const slogans = [
+                "Создавай. Воплощай. Превосходи.",
+                "От ∛3 к бесконечности возможностей",
+                "Мощь C в каждом скрипте",
+                "Нативный редактор — нативная производительность",
+                "Два компилятора — двойной контроль"
+            ];
+            
+            let sloganIndex = 0;
+            const sloganElement = document.querySelector('.slogan');
+            
+            if(sloganElement) {
+                setInterval(() => {
+                    sloganIndex = (sloganIndex + 1) % slogans.length;
+                    sloganElement.style.opacity = '0';
+                    sloganElement.style.transform = 'translateY(-10px)';
+                    
+                    setTimeout(() => {
+                        sloganElement.textContent = slogans[sloganIndex];
+                        sloganElement.style.opacity = '1';
+                        sloganElement.style.transform = 'translateY(0)';
+                    }, 300);
+                }, 5000);
+            }
+            
+            // Параллакс эффект для фоновых элементов
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const hero = document.querySelector('.hero');
+                if(hero) {
+                    hero.style.backgroundPosition = `center ${scrolled * 0.5}px`;
+                }
+                
+                // Движение фоновой тройки
+                const overlayThree = document.querySelector('.hero::before');
+                if(overlayThree) {
+                    document.querySelector('.hero').style.setProperty('--scroll-position', `${scrolled * 0.3}px`);
+                }
+            });
+            
+            // Интерактивность логотипа
+            const logoWrapper = document.querySelector('.logo-wrapper');
+            if(logoWrapper) {
+                logoWrapper.addEventListener('click', function() {
+                    this.style.animation = 'none';
+                    setTimeout(() => {
+                        this.style.animation = 'float 5s ease-in-out infinite';
+                    }, 10);
+                    
+                    // Создаем эффект частиц
+                    for(let i = 0; i < 10; i++) {
+                        createParticle(this.getBoundingClientRect().left + 40, this.getBoundingClientRect().top + 40);
+                    }
+                });
+            }
+            
+            // Функция для создания частиц
+            function createParticle(x, y) {
+                const particle = document.createElement('div');
+                particle.style.position = 'fixed';
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                particle.style.width = '4px';
+                particle.style.height = '4px';
+                particle.style.backgroundColor = `hsl(${Math.random() * 60 + 200}, 100%, 65%)`;
+                particle.style.borderRadius = '50%';
+                particle.style.pointerEvents = 'none';
+                particle.style.zIndex = '1000';
+                document.body.appendChild(particle);
+                
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = 2 + Math.random() * 3;
+                const life = 800 + Math.random() * 400;
+                
+                let startTime = Date.now();
+                
+                function animateParticle() {
+                    const elapsed = Date.now() - startTime;
+                    const progress = elapsed / life;
+                    
+                    if(progress >= 1) {
+                        document.body.removeChild(particle);
+                        return;
+                    }
+                    
+                    const currentX = x + Math.cos(angle) * velocity * elapsed * 0.1;
+                    const currentY = y + Math.sin(angle) * velocity * elapsed * 0.1;
+                    
+                    particle.style.left = `${currentX}px`;
+                    particle.style.top = `${currentY}px`;
+                    particle.style.opacity = 1 - progress;
+                    
+                    requestAnimationFrame(animateParticle);
+                }
+                
+                requestAnimationFrame(animateParticle);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIRULIT Game Engine - Документация</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        .version {
+            color: #ecf0f1;
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin: 0 0.25rem;
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+        
+        .sidebar {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        
+        .sidebar h3 {
+            margin-top: 0;
+            color: #2c3e50;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .sidebar a {
+            color: #2c3e50;
+            text-decoration: none;
+            display: block;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .sidebar a:hover {
+            background: #ecf0f1;
+            color: #3498db;
+        }
+        
+        .content {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        section {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        h3 {
+            color: #34495e;
+        }
+        
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            position: relative;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        
+        .code-block::before {
+            content: attr(data-language);
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: #007acc;
+            color: white;
+            padding: 2px 8px;
+            font-size: 12px;
+            border-radius: 0 8px 0 4px;
+            font-weight: bold;
+        }
+        
+        /* Синтаксическая подсветка */
+        .keyword { color: #569cd6; }
+        .type { color: #4ec9b0; }
+        .function { color: #dcdcaa; }
+        .string { color: #ce9178; }
+        .number { color: #b5cea8; }
+        .comment { color: #6a9955; }
+        .preprocessor { color: #9b9b9b; }
+        .constant { color: #4fc1ff; }
+        .operator { color: #d4d4d4; }
+        
+        .api-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .api-table th {
+            background: #34495e;
+            color: white;
+            text-align: left;
+            padding: 0.75rem;
+        }
+        
+        .api-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        .api-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .note {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .warning {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .feature {
+            background: #ecf0f1;
+            padding: 1rem;
+            border-radius: 6px;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: static;
+            }
+        }
+        
+        .active {
+            background: #3498db !important;
+            color: white !important;
+        }
+        
+        /* Стиль для заголовка с инклюдом */
+        .include-header {
+            background: #2c3e50;
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 2rem 0;
+            font-family: 'Consolas', monospace;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>MIRULIT Game Engine</h1>
+        <div class="version">v1.0.0</div>
+        <div>
+            <span class="badge">C99</span>
+            <span class="badge">SDL3</span>
+            <span class="badge">2D</span>
+            <span class="badge">MIT License</span>
+        </div>
+        <p>Легковесный игровой движок на языке C</p>
+    </header>
+    
+    <div class="container">
+        <nav class="sidebar">
+            <h3>Содержание</h3>
+            <ul>
+                <li><a href="#overview">Обзор</a></li>
+                <li><a href="#quickstart">Быстрый старт</a></li>
+                <li><a href="#config">Конфигурация</a></li>
+                <li><a href="#structures">Структуры</a></li>
+                <li><a href="#core-api">API Ядра</a></li>
+                <li><a href="#entities">Сущности</a></li>
+                <li><a href="#graphics">Графика</a></li>
+                <li><a href="#particles">Частицы</a></li>
+                <li><a href="#camera">Камера</a></li>
+                <li><a href="#collisions">Коллизии</a></li>
+                <li><a href="#math">Математика</a></li>
+                <li><a href="#examples">Примеры</a></li>
+            </ul>
+        </nav>
+        
+        <main class="content">
+            <section id="overview">
+                <h2>Обзор движка</h2>
+                <p><strong>MIRULIT</strong> — это легковесный 2D игровой движок на языке C, построенный на SDL3.</p>
+                
+                <div class="feature-grid">
+                    <div class="feature">Entity Component System</div>
+                    <div class="feature">Система частиц</div>
+                    <div class="feature">2D Камера</div>
+                    <div class="feature">Коллизии AABB</div>
+                    <div class="feature">Полный ввод</div>
+                    <div class="feature">Управление временем</div>
+                </div>
+                
+                <div class="note">
+                    <strong>Примечание:</strong> Движок находится в активной разработке. API может меняться между версиями.
+                </div>
+            </section>
+            
+            <section id="quickstart">
+                <h2>Быстрый старт</h2>
+                
+                <h3>Минимальный пример игры:</h3>
+                <div class="code-block" data-language="C">
+<span class="preprocessor">#include</span> <span class="string">&lt;mirulit.h&gt;</span>
+
+<span class="type">MIR_Entity</span>* <span class="function">player</span> = <span class="constant">NULL</span>;
+
+<span class="keyword">void</span> <span class="function">UpdatePlayer</span>(<span class="type">MIR_Entity</span>* <span class="function">entity</span>, <span class="keyword">float</span> <span class="function">delta</span>) {
+    <span class="keyword">float</span> <span class="function">speed</span> = <span class="number">200.0f</span>;
+    
+    <span class="keyword">if</span> (<span class="function">MIR_IsKeyDown</span>(<span class="constant">SDLK_W</span>))
+        <span class="function">entity</span><span class="operator">-></span><span class="function">transform.position.y</span> -= <span class="function">speed</span> * <span class="function">delta</span>;
+    
+    <span class="keyword">if</span> (<span class="function">MIR_IsKeyDown</span>(<span class="constant">SDLK_S</span>))
+        <span class="function">entity</span><span class="operator">-></span><span class="function">transform.position.y</span> += <span class="function">speed</span> * <span class="function">delta</span>;
+    
+    <span class="keyword">if</span> (<span class="function">MIR_IsKeyDown</span>(<span class="constant">SDLK_A</span>))
+        <span class="function">entity</span><span class="operator">-></span><span class="function">transform.position.x</span> -= <span class="function">speed</span> * <span class="function">delta</span>;
+    
+    <span class="keyword">if</span> (<span class="function">MIR_IsKeyDown</span>(<span class="constant">SDLK_D</span>))
+        <span class="function">entity</span><span class="operator">-></span><span class="function">transform.position.x</span> += <span class="function">speed</span> * <span class="function">delta</span>;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    <span class="keyword">if</span> (<span class="operator">!</span><span class="function">MIR_Init</span>(<span class="string">"My Game"</span>, <span class="number">800</span>, <span class="number">600</span>))
+        <span class="keyword">return</span> <span class="number">1</span>;
+    
+    <span class="function">player</span> = <span class="function">MIR_CreateEntity</span>(<span class="string">"player"</span>);
+    <span class="function">player</span><span class="operator">-></span><span class="function">transform.position</span> = (<span class="type">MIR_Vec2</span>){<span class="number">400</span>, <span class="number">300</span>};
+    <span class="function">player</span><span class="operator">-></span><span class="function">transform.scale</span> = (<span class="type">MIR_Vec2</span>){<span class="number">50</span>, <span class="number">50</span>};
+    <span class="function">player</span><span class="operator">-></span><span class="function">sprite.color</span> = <span class="constant">MIR_COLOR_GREEN</span>;
+    <span class="function">player</span><span class="operator">-></span><span class="function">update</span> = <span class="function">UpdatePlayer</span>;
+    
+    <span class="keyword">while</span> (<span class="function">MIR_IsRunning</span>()) {
+        <span class="function">MIR_ProcessEvents</span>();
+        <span class="function">MIR_BeginFrame</span>();
+        
+        <span class="function">MIR_UpdateEntities</span>();
+        <span class="function">MIR_UpdateParticles</span>();
+        
+        <span class="function">MIR_DrawEntities</span>();
+        <span class="function">MIR_DrawParticles</span>();
+        
+        <span class="function">MIR_EndFrame</span>();
+    }
+    
+    <span class="function">MIR_Shutdown</span>();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</div>
+            </section>
+            
+            <section id="config">
+                <h2>Конфигурация</h2>
+                
+                <h3>Макросы:</h3>
+                <div class="code-block" data-language="C">
+<span class="comment">// В mirulit.h:</span>
+<span class="comment">// #define MIRULIT_ENABLE_SDL_IMAGE   // PNG/JPG текстуры</span>
+<span class="comment">// #define MIRULIT_ENABLE_SDL_TTF     // Шрифты</span>
+<span class="comment">// #define MIRULIT_ENABLE_PHYSICS     // Расширенная физика</span></div>
+                
+                <h3>Лимиты:</h3>
+                <table class="api-table">
+                    <tr><td>MIRULIT_MAX_ENTITIES</td><td>1024</td><td>Макс. сущностей</td></tr>
+                    <tr><td>MIRULIT_MAX_PARTICLES</td><td>1000</td><td>Макс. частиц</td></tr>
+                    <tr><td>MIRULIT_MAX_KEYS</td><td>512</td><td>Отслеживаемые клавиши</td></tr>
+                    <tr><td>MIRULIT_DEFAULT_FPS</td><td>60</td><td>FPS по умолчанию</td></tr>
+                </table>
+            </section>
+            
+            <section id="structures">
+                <h2>Структуры данных</h2>
+                
+                <h3>Базовые типы:</h3>
+                <div class="code-block" data-language="C">
+<span class="comment">// Вектор 2D</span>
+<span class="keyword">typedef struct</span> { <span class="keyword">float</span> <span class="function">x</span>, <span class="function">y</span>; } <span class="type">MIR_Vec2</span>;
+
+<span class="comment">// Цвет RGBA</span>
+<span class="keyword">typedef struct</span> { <span class="keyword">uint8_t</span> <span class="function">r</span>, <span class="function">g</span>, <span class="function">b</span>, <span class="function">a</span>; } <span class="type">MIR_Color</span>;
+
+<span class="comment">// Прямоугольник</span>
+<span class="keyword">typedef struct</span> { <span class="keyword">float</span> <span class="function">x</span>, <span class="function">y</span>, <span class="function">w</span>, <span class="function">h</span>; } <span class="type">MIR_Rect</span>;</div>
+                
+                <h3>Сущность (Entity):</h3>
+                <div class="code-block" data-language="C">
+<span class="keyword">typedef struct</span> <span class="type">MIR_Entity</span> {
+    <span class="keyword">int</span> <span class="function">id</span>;
+    <span class="keyword">char</span> <span class="function">tag</span>[<span class="number">32</span>];
+    <span class="keyword">bool</span> <span class="function">active</span>;
+    <span class="keyword">bool</span> <span class="function">visible</span>;
+    
+    <span class="type">MIR_Transform</span> <span class="function">transform</span>;
+    <span class="type">MIR_Sprite</span> <span class="function">sprite</span>;
+    <span class="type">MIR_Collider</span> <span class="function">collider</span>;
+    
+    <span class="keyword">void</span> (*<span class="function">update</span>)(<span class="keyword">struct</span> <span class="type">MIR_Entity</span>*, <span class="keyword">float</span>);
+    <span class="keyword">void</span> (*<span class="function">draw</span>)(<span class="keyword">struct</span> <span class="type">MIR_Entity</span>*);
+    <span class="keyword">void</span> (*<span class="function">on_collision</span>)(<span class="keyword">struct</span> <span class="type">MIR_Entity</span>*, <span class="keyword">struct</span> <span class="type">MIR_Entity</span>*);
+    
+    <span class="keyword">void</span>* <span class="function">user_data</span>;
+} <span class="type">MIR_Entity</span>;</div>
+            </section>
+            
+            <section id="core-api">
+                <h2>API Ядра</h2>
+                
+                <table class="api-table">
+                    <tr><th>Функция</th><th>Описание</th><th>Возвращает</th></tr>
+                    <tr><td>MIR_Init(title, w, h)</td><td>Инициализация движка</td><td>bool</td></tr>
+                    <tr><td>MIR_Shutdown()</td><td>Корректное завершение</td><td>void</td></tr>
+                    <tr><td>MIR_ProcessEvents()</td><td>Обработка событий</td><td>void</td></tr>
+                    <tr><td>MIR_BeginFrame()</td><td>Начало кадра</td><td>void</td></tr>
+                    <tr><td>MIR_EndFrame()</td><td>Конец кадра</td><td>void</td></tr>
+                    <tr><td>MIR_GetDeltaTime()</td><td>Время между кадрами</td><td>float</td></tr>
+                    <tr><td>MIR_GetTime()</td><td>Время с запуска</td><td>float</td></tr>
+                    <tr><td>MIR_IsRunning()</td><td>Движок работает?</td><td>bool</td></tr>
+                    <tr><td>MIR_Quit()</td><td>Завершить игру</td><td>void</td></tr>
+                </table>
+            </section>
+            
+            <section id="entities">
+                <h2>Работа с сущностями</h2>
+                
+                <table class="api-table">
+                    <tr><th>Функция</th><th>Описание</th></tr>
+                    <tr><td>MIR_CreateEntity(tag)</td><td>Создание сущности</td></tr>
+                    <tr><td>MIR_DestroyEntity(entity)</td><td>Уничтожение сущности</td></tr>
+                    <tr><td>MIR_FindEntityByTag(tag)</td><td>Поиск по тегу</td></tr>
+                    <tr><td>MIR_FindEntityByID(id)</td><td>Поиск по ID</td></tr>
+                    <tr><td>MIR_UpdateEntities()</td><td>Обновление всех сущностей</td></tr>
+                    <tr><td>MIR_DrawEntities()</td><td>Отрисовка всех сущностей</td></tr>
+                </table>
+                
+                <h3>Пример:</h3>
+                <div class="code-block" data-language="C">
+<span class="type">MIR_Entity</span>* <span class="function">player</span> = <span class="function">MIR_CreateEntity</span>(<span class="string">"player"</span>);
+<span class="function">player</span><span class="operator">-></span><span class="function">transform.position</span> = (<span class="type">MIR_Vec2</span>){<span class="number">400</span>, <span class="number">300</span>};
+<span class="function">player</span><span class="operator">-></span><span class="function">transform.scale</span> = (<span class="type">MIR_Vec2</span>){<span class="number">50</span>, <span class="number">50</span>};
+<span class="function">player</span><span class="operator">-></span><span class="function">sprite.color</span> = <span class="constant">MIR_COLOR_BLUE</span>;
+<span class="function">player</span><span class="operator">-></span><span class="function">update</span> = <span class="function">UpdatePlayer</span>;</div>
+            </section>
+            
+            <section id="graphics">
+                <h2>Графика</h2>
+                
+                <table class="api-table">
+                    <tr><th>Функция</th><th>Описание</th></tr>
+                    <tr><td>MIR_DrawEntity(entity)</td><td>Отрисовка сущности</td></tr>
+                    <tr><td>MIR_DrawRect(rect, color)</td><td>Рисование прямоугольника</td></tr>
+                    <tr><td>MIR_DrawCircle(center, radius, color, seg)</td><td>Рисование круга</td></tr>
+                    <tr><td>MIR_DrawLine(start, end, color, thickness)</td><td>Рисование линии</td></tr>
+                    <tr><td>MIR_LoadTexture(filepath)</td><td>Загрузка текстуры</td></tr>
+                </table>
+            </section>
+            
+            <section id="particles">
+                <h2>Система частиц</h2>
+                
+                <table class="api-table">
+                    <tr><th>Функция</th><th>Описание</th></tr>
+                    <tr><td>MIR_EmitParticle(pos, vel, color, size, life)</td><td>Создание частицы</td></tr>
+                    <tr><td>MIR_EmitParticleEx(pos, vel, acc, color, size, life)</td><td>Создание с контролем</td></tr>
+                    <tr><td>MIR_UpdateParticles()</td><td>Обновление частиц</td></tr>
+                    <tr><td>MIR_DrawParticles()</td><td>Отрисовка частиц</td></tr>
+                </table>
+                
+                <h3>Пример взрыва:</h3>
+                <div class="code-block" data-language="C">
+<span class="keyword">void</span> <span class="function">CreateExplosion</span>(<span class="type">MIR_Vec2</span> <span class="function">position</span>) {
+    <span class="keyword">for</span> (<span class="keyword">int</span> <span class="function">i</span> = <span class="number">0</span>; <span class="function">i</span> &lt; <span class="number">50</span>; <span class="function">i</span>++) {
+        <span class="keyword">float</span> <span class="function">angle</span> = <span class="function">MIR_Math_RandomRange</span>(<span class="number">0</span>, <span class="number">2</span> * <span class="number">3.14159</span>);
+        <span class="keyword">float</span> <span class="function">speed</span> = <span class="function">MIR_Math_RandomRange</span>(<span class="number">100</span>, <span class="number">300</span>);
+        
+        <span class="type">MIR_Vec2</span> <span class="function">vel</span> = {
+            <span class="function">cosf</span>(<span class="function">angle</span>) * <span class="function">speed</span>,
+            <span class="function">sinf</span>(<span class="function">angle</span>) * <span class="function">speed</span>
+        };
+        
+        <span class="type">MIR_Color</span> <span class="function">colors</span>[] = {
+            <span class="constant">MIR_COLOR_RED</span>,
+            <span class="constant">MIR_COLOR_ORANGE</span>, 
+            <span class="constant">MIR_COLOR_YELLOW</span>
+        };
+        
+        <span class="type">MIR_Color</span> <span class="function">color</span> = <span class="function">colors</span>[<span class="function">rand</span>() % <span class="number">3</span>];
+        
+        <span class="function">MIR_EmitParticle</span>(
+            <span class="function">position</span>, 
+            <span class="function">vel</span>, 
+            <span class="function">color</span>,
+            <span class="function">MIR_Math_RandomRange</span>(<span class="number">2</span>, <span class="number">5</span>),
+            <span class="function">MIR_Math_RandomRange</span>(<span class="number">0.5</span>, <span class="number">1.5</span>)
+        );
+    }
+}</div>
+            </section>
+            
+            <section id="camera">
+                <h2>Камера</h2>
+                
+                <table class="api-table">
+                    <tr><th>Функция</th><th>Описание</th></tr>
+                    <tr><td>MIR_SetCameraTarget(target)</td><td>Установка цели</td></tr>
+                    <tr><td>MIR_SetCameraZoom(zoom)</td><td>Установка зума (0.1-5.0)</td></tr>
+                    <tr><td>MIR_CameraShake(intensity, duration)</td><td>Тряска камеры</td></tr>
+                </table>
+            </section>
+            
+            <section id="collisions">
+                <h2>Коллизии</h2>
+                
+                <table class="api-table">
+                    <tr><th>Функция</th><th>Описание</th></tr>
+                    <tr><td>MIR_CheckCollision(a, b)</td><td>Проверка коллизии</td></tr>
+                    <tr><td>MIR_PointCollision(point)</td><td>Поиск сущности в точке</td></tr>
+                    <tr><td>MIR_ResolveCollisions()</td><td>Обработка всех коллизий</td></tr>
+                </table>
+                
+                <h3>Пример:</h3>
+                <div class="code-block" data-language="C">
+<span class="keyword">void</span> <span class="function">OnCollision</span>(<span class="type">MIR_Entity</span>* <span class="function">a</span>, <span class="type">MIR_Entity</span>* <span class="function">b</span>) {
+    <span class="comment">// Обработка столкновения</span>
+    <span class="function">printf</span>(<span class="string">"Collision: %s with %s\n"</span>, <span class="function">a</span><span class="operator">-></span><span class="function">tag</span>, <span class="function">b</span><span class="operator">-></span><span class="function">tag</span>);
+}
+
+<span class="comment">// Настройка коллайдера</span>
+<span class="function">entity</span><span class="operator">-></span><span class="function">collider.bounds</span> = (<span class="type">MIR_Rect</span>){<span class="operator">-</span><span class="number">25</span>, <span class="operator">-</span><span class="number">25</span>, <span class="number">50</span>, <span class="number">50</span>};
+<span class="function">entity</span><span class="operator">-></span><span class="function">collider.on_collision</span> = <span class="function">OnCollision</span>;</div>
+            </section>
+            
+            <section id="math">
+                <h2>Математические функции</h2>
+                
+                <table class="api-table">
+                    <tr><th>Функция</th><th>Описание</th></tr>
+                    <tr><td>MIR_Math_Lerp(a, b, t)</td><td>Линейная интерполяция</td></tr>
+                    <tr><td>MIR_Math_Clamp(val, min, max)</td><td>Ограничение значения</td></tr>
+                    <tr><td>MIR_Math_Distance(a, b)</td><td>Расстояние между точками</td></tr>
+                    <tr><td>MIR_Math_Normalize(v)</td><td>Нормализация вектора</td></tr>
+                    <tr><td>MIR_Math_RandomRange(min, max)</td><td>Случайное число</td></tr>
+                    <tr><td>MIR_Vec2_Add(a, b)</td><td>Сложение векторов</td></tr>
+                    <tr><td>MIR_Vec2_Subtract(a, b)</td><td>Вычитание векторов</td></tr>
+                    <tr><td>MIR_Vec2_Multiply(v, s)</td><td>Умножение на скаляр</td></tr>
+                </table>
+            </section>
+            
+            <section id="examples">
+                <h2>Примеры использования</h2>
+                
+                <h3>Игровой цикл:</h3>
+                <div class="code-block" data-language="C">
+<span class="keyword">while</span> (<span class="function">MIR_IsRunning</span>()) {
+    <span class="comment">// 1. Обработка ввода</span>
+    <span class="function">MIR_ProcessEvents</span>();
+    
+    <span class="comment">// 2. Начало кадра</span>
+    <span class="function">MIR_BeginFrame</span>();
+    
+    <span class="comment">// 3. Логика игры</span>
+    <span class="function">MIR_UpdateEntities</span>();
+    <span class="function">MIR_UpdateParticles</span>();
+    <span class="function">MIR_ResolveCollisions</span>();
+    
+    <span class="comment">// 4. Отрисовка</span>
+    <span class="function">MIR_DrawEntities</span>();
+    <span class="function">MIR_DrawParticles</span>();
+    
+    <span class="comment">// 5. Конец кадра</span>
+    <span class="function">MIR_EndFrame</span>();
+}</div>
+                
+                <div class="warning">
+                    <strong>Важно:</strong> Всегда вызывайте MIR_Shutdown() перед выходом из программы!
+                </div>
+                
+                <div class="note">
+                    <strong>Производительность:</strong> Используйте пулы объектов для избежания частых аллокаций памяти.
+                </div>
+                
+                <h3>Лицензия MIT:</h3>
+                <div class="code-block" data-language="text">
+MIT License
+Copyright (c) 2024 MIRULIT Engine
+Разрешается свободное использование, модификация и распространение.</div>
+            </section>
+        </main>
+    </div>
+    
+    <script>
+        // Плавная прокрутка для навигации
+        document.querySelectorAll('.sidebar a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 20,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Подсветка активного раздела
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.sidebar a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

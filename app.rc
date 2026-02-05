@@ -1,0 +1,33 @@
+#include <windows.h>
+
+IDI_APP_ICON ICON "dist/engine/icons/app.ico"
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION 1,0,0,1
+PRODUCTVERSION 1,0,0,1
+FILEFLAGSMASK 0x3fL
+FILEFLAGS 0x0L
+FILEOS VOS_NT_WINDOWS32
+FILETYPE VFT_APP
+FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+            VALUE "Comments", "Mirulit Game Engine Editor"
+            VALUE "CompanyName", "MiruLit-studio"
+            VALUE "FileDescription", "Mirulit Editor"
+            VALUE "FileVersion", "1.0.0.1"
+            VALUE "InternalName", "editor"
+            VALUE "LegalCopyright", "Copyright © 2024 MiruLit-studio"
+            VALUE "OriginalFilename", "editor.exe"
+            VALUE "ProductName", "Mirulit Game Engine"
+            VALUE "ProductVersion", "1.0.0.1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
